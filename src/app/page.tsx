@@ -47,8 +47,6 @@ export default function Home() {
     return hash;
   };
 
-  const wordHashMap = getWordHashMap();
-
   const handleChange = (event: any, outerIndex: number, innerIndex: number) => {
     const value = event.target.value;
     const re = /^[A-Za-z]+$/;
@@ -66,7 +64,11 @@ export default function Home() {
     }
   };
 
-  const getStyles = (outerIndex: number, innerIndex: number) => {
+  const getStyles = (
+    outerIndex: number,
+    innerIndex: number,
+    wordHashMap: any
+  ) => {
     const correctPlace = "bg-emerald-400";
     const incorrectPlace = "bg-amber-500";
     const error = "bg-slate-500";
@@ -88,10 +90,11 @@ export default function Home() {
   const renderInputList = () => {
     return guessesArray.map((inputs: any[], outerIndex: number) => {
       const isRowDisabled = outerIndex !== currentRowIndex;
+      const wordHashMap = getWordHashMap();
       return (
         <div key={uuidv4()} className="flex flex-row">
           {inputs.map((letter, innerIndex) => {
-            const styles = getStyles(outerIndex, innerIndex);
+            const styles = getStyles(outerIndex, innerIndex, wordHashMap);
             const isDisabled = inputs.join("").length === 5;
             return (
               <input
